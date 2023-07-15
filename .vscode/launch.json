@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // {
+    //   "name": "daily_space",
+    //   "request": "launch",
+    //   "type": "dart",
+    //   "program": "lib/main.dart",
+
+    //   "toolArgs": [
+    //     "--dart-define-from-file",
+    //     "/home/acromondx/Documents/myCodes/flutter_playground/daily_space/lib/apod-key.json"
+    //   ]
+    // },
+
+    {
+      "name": "daily_space (debug mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "program": "lib/main.dart",
+      "toolArgs": ["--dart-define-from-file", "lib/apod-key.json"]
+    },
+    {
+      "name": "daily_space (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/main.dart",
+      "toolArgs": ["--dart-define-from-file", "lib/apod-key.json"]
+    },
+    {
+      "name": "daily_space (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "toolArgs": ["--dart-define-from-file", "lib/apod-key.json"]
+    }
+  ]
+}
