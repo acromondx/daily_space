@@ -7,14 +7,14 @@ import 'package:path_provider/path_provider.dart';
 final dbServiceProvider =
     ChangeNotifierProvider<DatabaseService>((_) => DatabaseService());
 
-final bookmarkedFolderProvider = FutureProvider<List<Apod>>((ref) async {
+final savedApodProvider = FutureProvider<List<Apod>>((ref) async {
   final result = await ref.watch(dbServiceProvider).getAllApod();
   return result;
 });
 
-final isBookmarkedProvider =
-    FutureProvider.family<bool, Apod>((ref, course) async {
-  final result = await ref.watch(dbServiceProvider).isBookmarked(course);
+final isApodSavedProvider =
+    FutureProvider.family<bool, Apod>((ref, apod) async {
+  final result = await ref.watch(dbServiceProvider).isSavead(apod);
   return result;
 });
 
@@ -35,7 +35,7 @@ class DatabaseService extends ChangeNotifier {
     return Future.value(Isar.getInstance());
   }
 
-  Future<void> bookmarkApod(Apod newApod) async {
+  Future<void> saveApod(Apod newApod) async {
     final isar = await db;
 
     await isar.writeTxn(() async {
@@ -44,7 +44,7 @@ class DatabaseService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> isBookmarked(Apod apod) async {
+  Future<bool> isSavead(Apod apod) async {
     final isar = await db;
     if (await isar.apods.where().filter().apodIdEqualTo(apod.apodId).count() >=
         1) {

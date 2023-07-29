@@ -1,62 +1,11 @@
-import 'package:daily_space/views/bookmarks_view.dart';
+import 'package:daily_space/views/saved_apods_view.dart';
 import 'package:daily_space/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
-// class PageNavigator extends StatefulWidget {
-//   const PageNavigator({super.key});
-
-//   @override
-//   PageNavigatorState createState() => PageNavigatorState();
-// }
-
-// class PageNavigatorState extends State<PageNavigator> {
-//   int _selectedIndex = 0;
-
-//   static List<Widget> pages = [
-//     const HomeView(),
-//     const BookmarksView(),
-//     const SettingsView()
-//   ];
-//   void _onItemTapped(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: pages[_selectedIndex],
-//       bottomNavigationBar: NavigationBar(
-//         onDestinationSelected: _onItemTapped,
-//         selectedIndex: _selectedIndex,
-//         destinations: const <Widget>[
-//           NavigationDestination(
-//             icon: Icon(IconlyLight.home),
-//             selectedIcon: Icon(IconlyBold.home),
-//             label: 'Explore',
-//           ),
-//           NavigationDestination(
-//             icon: Icon(IconlyLight.star),
-//             selectedIcon: Icon(IconlyBold.star),
-//             label: 'Saved',
-//           ),
-//           NavigationDestination(
-//             icon: Icon(IconlyLight.setting),
-//             selectedIcon: Icon(IconlyBold.setting),
-//             label: 'Settings',
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -83,7 +32,7 @@ class _PageNavigatorState extends State<PageNavigator> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeView(),
-    BookmarksView(),
+    SavedApodsView(),
   ];
   void _onItemTapped(int index) {
     setState(() {

@@ -25,19 +25,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Daily Space 🚀')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Center(
-            child: ref
-                .watch(apodProvider(ref.watch(selectedDateProvider)))
-                .when(
-                  data: (data) {
-                    // if (data.title == null || data.url == null) {
-                    //   return const Text('No data available.');
-                    // }
+      body: ref.watch(apodProvider(ref.watch(selectedDateProvider))).when(
+            data: (data) {
+              // if (data.title == null || data.url == null) {
+              //   return const Text('No data available.');
+              // }
 
-                    return Column(
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const SizedBox(height: 80),
@@ -129,7 +127,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                 top: 20.0,
                                 child: IconButton.filledTonal(
                                   icon: ref
-                                      .watch(isBookmarkedProvider(data))
+                                      .watch(isApodSavedProvider(data))
                                       .when(
                                           skipLoadingOnReload: true,
                                           data: (data) => data
@@ -145,14 +143,14 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                               color: Colors.amber[700])),
                                   color: Colors.red,
                                   onPressed: () async {
-                                    if (await apodData.isBookmarked(data)) {
+                                    if (await apodData.isSavead(data)) {
                                       ref
                                           .read(dbServiceProvider)
                                           .deleteApod(data.apodId);
                                     } else {
                                       ref
                                           .read(dbServiceProvider)
-                                          .bookmarkApod(data);
+                                          .saveApod(data);
                                     }
                                   },
                                 ),
@@ -161,22 +159,23 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           ),
                         ),
                       ],
-                    );
-                  },
-                  error: (error, st) {
-                    print(error.toString());
-                    return InternetErrorSection(
-                      error: error,
-                      onRefreshButtonPressed: () => ref.refresh(
-                          apodProvider(ref.watch(selectedDateProvider))),
-                    );
-                  },
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                    ),
+                  ),
                 ),
+              );
+            },
+            error: (error, st) {
+              print(error.toString());
+              return Center(
+                child: InternetErrorSection(
+                  error: error,
+                  onRefreshButtonPressed: () => ref
+                      .refresh(apodProvider(ref.watch(selectedDateProvider))),
+                ),
+              );
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
           ),
-        ),
-      ),
     );
   }
 }

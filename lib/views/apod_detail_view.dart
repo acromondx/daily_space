@@ -1,9 +1,9 @@
 import 'package:daily_space/models/apod.dart';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconly/iconly.dart';
+import 'package:photo_view/photo_view.dart';
 
 import '../constants.dart';
 import '../services/download_image.dart';
@@ -30,9 +30,25 @@ class ApodDetailView extends ConsumerWidget {
               const SizedBox(width: 7),
               IconButton.filledTonal(
                 tooltip: 'Preview image',
+                // onPressed: () {
+                //   showImageViewer(context, Image.network(apod.url!).image,
+                //       swipeDismissible: true, doubleTapZoomable: true);
+                // },
                 onPressed: () {
-                  showImageViewer(context, Image.network(apod.url!).image,
-                      swipeDismissible: true, doubleTapZoomable: true);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (builder) => Scaffold(
+                            appBar: AppBar(
+                              leading: const SizedBox(),
+                              actions: [
+                                IconButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    icon: const Icon(Icons.close))
+                              ],
+                            ),
+                            body: PhotoView(
+                              imageProvider: NetworkImage(apod.url!),
+                            ),
+                          )));
                 },
                 icon: const Icon(Icons.fullscreen),
               ),

@@ -6,10 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../api_key.dart'; //create and import your own API key
 import '../models/apod.dart';
 
-final selectedDateProvider = StateProvider<DateTime>((ref) => DateTime.now());
+final selectedDateProvider = StateProvider<DateTime>((_) => DateTime.now());
 
-final apodProvider =
-    FutureProvider.family<Apod, DateTime>((ref, dateTime) async {
+final apodProvider = FutureProvider.family<Apod, DateTime>((_, dateTime) async {
   return getData(dateTime: dateTime);
 });
 
@@ -30,7 +29,7 @@ Future<Apod> getData({DateTime? dateTime}) async {
     print(Apod.fromJson(res).mediaType);
     return Apod.fromJson(res);
   } on DioException catch (e) {
-    throw 'Network error: ${e.message}';
+    throw 'Error: ${e.message}';
   } catch (e) {
     throw 'An unexpected error occurred: $e';
   }
